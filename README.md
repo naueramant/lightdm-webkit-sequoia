@@ -1,4 +1,4 @@
-## Sequoia design LightDM Webkit2 greeter theme
+## Sequoia LightDM Webkit2 greeter theme
 
 This is a theme for LightDM Webkit2 (`lightdm-webkit2-greeter`).
 
@@ -7,6 +7,7 @@ Arch Linux users can find it in the AUR: [`lightdm-webkit-theme-sequoia-git`](ht
 ### Screenshots
 
 ![](http://i.imgur.com/zjBEVEk.png)
+![](http://i.imgur.com/Xiyg77r.png)
 
 ### Features
 
@@ -29,13 +30,7 @@ blah
 
 ### Setting your own user picture
 
-There are a couple of methods you can use to set your user picture in LightDM:
-
-- ~~Put a `jpg` of your face in your home directory as a file called `.face`~~
-
-or
-
-- Add `Icon=/var/lib/AccountsService/icons/<youraccountname>` to the bottom of `/var/lib/AccountsService/users/<youraccountname>` and place a profile image at `/var/lib/AccountsService/icons/<youraccountname>`
+Add `Icon=/var/lib/AccountsService/icons/<youraccountname>` to the bottom of `/var/lib/AccountsService/users/<youraccountname>` and place a profile image at `/var/lib/AccountsService/icons/<youraccountname>`
 
 ### Configuration
 
