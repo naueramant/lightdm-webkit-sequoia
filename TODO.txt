@@ -1,0 +1,10 @@
+[ ] Write readme
+[ ] Select session feature
+[ ] Save user last used session
+[ ] Confirm dialog for actions
+[ ] Check and polyfill config at init
+[ ] Language support
+[ ] Watch locals support
+
+[ ] Make AUR package
+[ ] Make apptitude package
