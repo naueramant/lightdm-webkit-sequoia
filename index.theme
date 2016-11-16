@@ -1,6 +1,6 @@
 [theme]
-name=Simple
-description=Arc Theme
+name=Sequoia
+description=Sequoia Theme
 engine=lightdm-webkit-greeter
 url=index.html
 session=xfce
