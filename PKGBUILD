@@ -1,6 +1,6 @@
 # Maintainer: Jonas Tranberg <jonastranberg93@gmail.com>
 pkgname=lightdm-webkit-theme-sequoia-git
-pkgver=666
+pkgver=r7.505aee8
 pkgrel=1
 pkgdesc="A simple LightDM theme"
 
