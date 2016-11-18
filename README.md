@@ -28,9 +28,10 @@ I created this for use on Arch Linux, so it only has the basic features of:
 
 Download from AUR [`lightdm-webkit-theme-sequoia-git`] (https://aur.archlinux.org/packages/lightdm-webkit-theme-sequoia-git/) or use yaourt:
 
-'''bash
+
+```bash
 lightdm-webkit-theme-sequoia-git
-'''
+``` 
 
 Now enable the theme in your /etc/lightdm/lightdm-webkit2-greeter.conf Search for greeter section Set webkit-theme to sequoia
 
