@@ -5,36 +5,33 @@
 		<link rel="stylesheet" href="css/arc.css">
 
 		<script src="vendor/js/mock.js"></script>
-
 		<script src="config.js"></script>
-
-		<!-- Vendor JavaScript -->
 		<script src="vendor/js/jquery.min.js"></script>
 		<script src="vendor/js/moment-with-locales.min.js"></script>
 	</head>
 	<body>
 		<div class="wrap">
+
 			<div class="top-panel">
 				<div id="clock_widget"></div>
 				<div id="notification-area"></div>
 			</div>
 
-
 			<div class="login-container fade-in">
-				<ul id="user-list">
-				</ul>
+				<ul id="user-list"></ul>
 
 				<select id="session-list" style="display: none;"></select>
 
-				<div id="login-input">
+				<div id="login-input">	
 					<div id="user-info">
 					</div>
+					
 					<div id="username-box">
-						<!--<label for="username-field">username</label><br>-->
 						<input id="username-field" type="text" placeholder="username">
 					</div>
-					<!--<label for="password-field">password</label><br>-->
+
 					<input id="password-field" type="password" placeholder="password">
+					
 					<div class="buttons-row">
 						<button id="cancel-button" onclick="javascript:arc.theme.hide_user_login();">cancel</button>
 						<button id="login-button" class="btn-right"
@@ -48,16 +45,17 @@
 			<div class="bottom-panel">
 				<div class="bottom-panel-inner">
 					<button id="shutdown-btn" class="action-btn" onclick="javascript:lightdm.shutdown();" tabindex="0">shutdown</button>
+					
 					<button id="restart-btn" class="action-btn" onclick="javascript:lightdm.restart();" tabindex="0">restart</button>
+					
 					<button id="suspend-btn" class="action-btn" onclick="javascript:lightdm.suspend();" tabindex="0">suspend</button>
+					
 					<button id="hibernate-btn" class="action-btn" onclick="javascript:lightdm.hibernate();" tabindex="0">hibernate</button>
 				</div>
 			</div>
 		</div>
 
 		<div id="background"></div>
-
-
 
 		<script src="js/arc.js"></script>
 	</body>
