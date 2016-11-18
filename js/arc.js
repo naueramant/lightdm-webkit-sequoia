@@ -36,24 +36,31 @@ class ArcGreeter {
 
 	start_authentication(username) {
 		if (_theme.$usernameField.is(":visible")){
-			username = _theme.$usernameField.val();
+			if(username.length <= 0) {
+				_theme.$usernameField.addClass("red-outline");
+				_theme.$usernameField.focus();
+				return;
+			}
 		}
 
 		_theme.username = username;
 
 		if(!lightdm.in_authentication) {
+			$(".round-image").css("animation", "border-pulsate 1s infinite");
 			lightdm.cancel_authentication();
 			lightdm.start_authentication(username);
 		}
 	}
 
 	authentication_complete() {
+		$(".round-image").css("animation", "none");
 		if ( !lightdm.is_authenticated ) {
 			_theme.add_notification("exclamation-circle", "#d23232", "Login attempt failed for user " + _theme.username);
 			_theme.$passwordField.val("");
 			_theme.$passwordField.prop( "disabled", false );
 			_theme.$cancelButton.prop( "disabled", false );
 			_theme.$loginButton.prop( "disabled", false );
+			_theme.$usernameField.removeClass("red-outline");
 			_theme.$passwordField.addClass("red-outline");
 			_theme.$passwordField.focus();
 		}
@@ -107,6 +114,7 @@ class ArcTheme {
 		this.$sessionList= $("#session-list");
 		this.$cancelButton = $("#cancel-button");
 		this.$loginButton = $("#login-button");
+		this.$userImage = $("#login-button");
 
 		this.Initialize();
 
@@ -114,12 +122,6 @@ class ArcTheme {
 	}
 
 	Initialize() {
-
-		if(prefs["allow_anonymous_login"])
-			_theme.$loginLabel.show();
-		else
-			_theme.$loginLabel.hide();
-
 		this.Initialize_buttons();
 
 		$(window).load(()=>{
@@ -141,20 +143,27 @@ class ArcTheme {
 		$(document.body).keydown((ev)=>{
 			//enter
 		    if (ev.which === 13) {
-		    	if(_theme.$passwordField.is(":focus"))
-		    		_greeter.start_authentication(_theme.user.name);
+		    	if(_theme.$passwordField.is(":focus")) {
+		    		if (_theme.$usernameField.is(":visible")) 
+		    			_greeter.start_authentication(_theme.$usernameField.val());
+		    		else
+		    			_greeter.start_authentication(_theme.user.name);
+		    	}
+		    	else if(_theme.$usernameField.is(":focus"))
+		    		$('#password-field').focus();
 		    	else
 					$(':focus').click();
 		    }
 		    //escape
 		    else if (ev.which === 27) {
+		    	lightdm.cancel_authentication();
 		    	_theme.hide_user_login();
 		    }
 
 		    else if (_theme.$usernameField.is(":focus")) {
 			    //down
 			    if (ev.which === 40) {
-			    	$('#password-field').focus();
+			    	_theme.$passwordField.focus();
 			    }
 		    }
 
@@ -162,14 +171,13 @@ class ArcTheme {
 		    					//up
 			    if (ev.which === 38) {
 			    	if(_theme.$passwordField.is(":visible")){
-			    		$('#username-field').focus();
+			    		_theme.$usernameField.focus();
 			    	}
 			    }
 
 			    //down
 			    if (ev.which === 40) {
 			    	$('#not-listed-btn').focus();
-			    	//$('#cancel-button').focus();
 			    }
 		    }
 
@@ -177,7 +185,7 @@ class ArcTheme {
 				//up
 			    if (ev.which === 38) {
 			    	if(_theme.$loginBox.is(":visible")){
-			    		$('#password-field').focus();
+			    		_theme.$passwordField.focus();
 			    		//$('#cancel-button').focus();
 			    	}
 			    	else
@@ -185,7 +193,7 @@ class ArcTheme {
 			    }
 			    //down
 			    if (ev.which === 40) {
-			    	$('#shutdown-btn').focus();
+			    	$('.bottom-panel-inner').children(':visible').first().focus();
 			    }
 		    }
 
@@ -200,7 +208,7 @@ class ArcTheme {
 			    }
 			    //up
 			    if (ev.which === 38) {
-			    	$('#password-field').focus();
+			    	_theme.$passwordField.focus();
 			    }
 			    //down
 			    if (ev.which === 40) {
@@ -219,7 +227,10 @@ class ArcTheme {
 			    }
 				//up
 			    if (ev.which === 38) {
-			    	$('#not-listed-btn').focus();
+			    	if($('#not-listed-btn').is(":visible"))
+			    		$('#not-listed-btn').focus();
+			    	else
+			    		_theme.$userList.children().last().focus();
 			    }
 		    }
 
@@ -231,7 +242,10 @@ class ArcTheme {
 			    //down
 			    if (ev.which === 40) {
 			    	if(_theme.$userList.children().last().is(":focus"))
-			    		$('#not-listed-btn').focus();
+			    		if(prefs["allow_anonymous_login"])
+			    			$('#not-listed-btn').focus();
+			    		else 
+			    			$('.bottom-panel-inner').children().first().focus();
 			    	else
 			    		$(':focus').next().focus();
 			    }
@@ -345,17 +359,21 @@ class ArcTheme {
 		_theme.$loginBox.show();
 		_theme.$userList.hide();
 		_theme.$usernameBox.hide();
+		_theme.$loginLabel.show();
 		_theme.$loginLabel.text("Sign in with another user");
 		_theme.$passwordField.focus();
 	}
 
 	show_anonymous_login(){
-		if(lightdm.in_authentication)
-			return;
+		if(prefs["allow_anonymous_login"])
+			_theme.$loginLabel.show();
+		else
+			_theme.$loginLabel.hide();
 
 		var html = '<img height="150" width="150" src="' + prefs["default_user_image"] + '" class="round-image">';
 		_theme.$userInfo.empty().append(html);
 		_theme.$passwordField.removeClass("red-outline");
+		_theme.$usernameField.removeClass("red-outline");
 		_theme.$passwordField.val("");
 		_theme.$usernameField.val("");
 		_theme.$loginBox.show();

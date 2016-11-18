@@ -352,3 +352,8 @@ body, .wrap {
 	-webkit-transition-duration: 1s;
 }
 
+@keyframes border-pulsate {
+    0%   { border-color: #fff; }
+    50% { border-color: #8a8a8a; }
+    100%   { border-color: #fff; }
+}
