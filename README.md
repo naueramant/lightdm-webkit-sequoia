@@ -26,7 +26,13 @@ I created this for use on Arch Linux, so it only has the basic features of:
 
 #### AUR Linux
 
-Download from AUR [`lightdm-webkit-theme-sequoia-git`](https://aur.archlinux.org/packages/lightdm-webkit-theme-sequoia-git/)Enable the theme in your /etc/lightdm/lightdm-webkit2-greeter.conf Search for greeter section Set webkit-theme to sequoia
+Download from AUR [`lightdm-webkit-theme-sequoia-git`] (https://aur.archlinux.org/packages/lightdm-webkit-theme-sequoia-git/) or use yaourt:
+
+'''bash
+lightdm-webkit-theme-sequoia-git
+'''
+
+Now enable the theme in your /etc/lightdm/lightdm-webkit2-greeter.conf Search for greeter section Set webkit-theme to sequoia
 
 #### Manuel from github
 
@@ -35,15 +41,19 @@ Instructions will differ for every distribution:
 - Install and enable lightdm and lightdm-webkit2-greeter
 - In the terminal, cd to /usr/share/lightdm-webkit/themes/
 - Clone this repository (git clone https://github.com/naueramant/lightdm-webkit-sequoia sequoia)
-- Enable the theme in your /etc/lightdm/lightdm-webkit2-greeter.conf
+- Enable the theme in your /etc/lightdm/lightdm-webkit2-geeter.conf
 - Search for greeter section
 - Set webkit-theme to sequoia
+
+### Configuration
+
+If you navigate to the /usr/share/lightdm-webkit/themes/sequoia folder you will find a 'config.js' file with self explanatory varibles which you can play around with.
+
+Also feel free to change the other files (css/js) until they fit your liking.
 
 ### Setting your own user picture
 
 Add `Icon=/var/lib/AccountsService/icons/<youraccountname>` to the bottom of `/var/lib/AccountsService/users/<youraccountname>` and place a profile image at `/var/lib/AccountsService/icons/<youraccountname>`
-
-### Configuration
 
 ### Tips
 #### Lock screen
