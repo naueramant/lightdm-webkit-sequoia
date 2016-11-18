@@ -2,3 +2,4 @@ lightdm-webkit-sequoia/
 pkg/
 src/
 *.pkg.tar.xz
+.SRCINFO
