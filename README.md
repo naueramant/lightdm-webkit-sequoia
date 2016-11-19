@@ -11,13 +11,13 @@ This is a theme for LightDM Webkit2 (`lightdm-webkit2-greeter`).
 
 I created this for use on Arch Linux, so it only has the basic features of:
 
-- Selecting an available user from a dropdown
-- Entering their password
-- Seeing their profile picture
+- Selecting an available user from a list
+- Login to not listed users
+- Seeing user profile picture
 - Restarting the computer
-- Shutting the computer down
+- Shutting down the computer
 - Suspending the computer
-- Hibernate
+- Hibernating the computer
 - Select session (GNOME, KDE, Xfce or other installed DE)
 - Easy configuration from config.js
 - Faild login notification
