@@ -65,12 +65,12 @@ class ArcGreeter {
 			_theme.$passwordField.focus();
 		}
 		else {
-			if(_theme.selected_session ) {
+			if(_theme.session ) {
 				_theme.$topPanel.css("top", -50);
 				_theme.$bottomPanel.css("bottom", -50);
 				_theme.$fadeInItems.css("opacity", 0);
 				setTimeout(() => {
-					lightdm.login( lightdm.authentication_user, _theme.selected_session.key );
+					lightdm.login( _theme.user, _theme.session.key );
 				}, 1000);
 			}
 
@@ -97,7 +97,6 @@ class ArcTheme {
 		this.actionListFocus = false;
 		this.buttonsRowFocus = false;
 		this.notListedBtnFocus = false;
-		this.selected_session = lightdm.default_session;
 
 		this.$clock = $( "#clock_widget" );
 		this.$topPanel = $( ".top-panel" );
@@ -111,10 +110,10 @@ class ArcTheme {
 		this.$usernameField = $("#username-field");
 		this.$loginLabel = $("#not-listed-btn");
 		this.$usernameBox = $("#username-box");
-		this.$sessionList= $("#session-list");
 		this.$cancelButton = $("#cancel-button");
 		this.$loginButton = $("#login-button");
 		this.$userImage = $("#login-button");
+		this.$sessionField = $("#session-field");
 
 		this.Initialize();
 
@@ -122,6 +121,7 @@ class ArcTheme {
 	}
 
 	Initialize() {
+
 		this.Initialize_buttons();
 
 		$(window).load(()=>{
@@ -252,8 +252,20 @@ class ArcTheme {
 		    }
 		});
 
-		this.$sessionList.on("change", ()=>{
-			_theme.selected_session = lightdm.sessions[this.selectedIndex];
+		$("#session-text").on("click", ()=>{
+			$('#session-field').toggle();
+			event.stopPropagation();
+		})
+
+		$(window).click(()=>{
+			$('#session-field').hide();
+		});
+
+		_theme.$sessionField.change(function() {
+			_theme.session = lightdm.sessions[this.selectedIndex];
+
+			if(_theme.user)
+				localStorage.setItem(_theme.user.name, _theme.session.key);
 		});
 
 
@@ -283,7 +295,6 @@ class ArcTheme {
 
 		this.initialize_clock();
 		this.list_users();
-		this.list_sessions();
 	}
 
 	Initialize_buttons() {
@@ -306,6 +317,41 @@ class ArcTheme {
 		}, 1000 );
 	}
 
+	list_sessions(user) {
+		_theme.$sessionField.empty();
+
+		var selectedSession = lightdm.default_session;
+		$("#session-text").text(selectedSession);
+		_theme.session = selectedSession;
+
+		if(user) {
+			var us = localStorage.getItem(user.name);
+			if (us) {
+				selectedSession = us;
+			}
+		}
+
+		for ( var s of lightdm.sessions ) {
+			var opt = $("<li></li>").attr("value", s.key).text(s.name);
+
+			if(s.key == selectedSession) {
+				_theme.session = s.key;
+				$("#session-text").text(s.name);
+			}
+
+			_theme.$sessionField.append(opt); 
+
+			opt.on("click", function() {
+				$("#session-text").text($(this).text());
+				_theme.session = $(this).attr("value");
+				
+				if(!_theme.$usernameField.is(":visible")){
+					localStorage.setItem(_theme.user.name, $(this).attr("value"));
+				}
+			});
+		}
+	}
+
 	list_users() {
 		if(lightdm.users.length == 1 && prefs["one_user_auto_select"]){
 			this.show_user_login(lightdm.users[0]);
@@ -316,14 +362,6 @@ class ArcTheme {
 		}
 
 		this.$userList.children().first().focus();
-	}
-
-	list_sessions() {
-		for ( var session of lightdm.sessions ) {
-			_theme.$sessionList.append($("<option></option>")
-                    .attr("value", session.name)
-                    .text(session.name));
-		}
 	}
 
 	add_user(user, isList){
@@ -362,6 +400,7 @@ class ArcTheme {
 		_theme.$loginLabel.show();
 		_theme.$loginLabel.text("Sign in with another user");
 		_theme.$passwordField.focus();
+		_theme.list_sessions(user);
 	}
 
 	show_anonymous_login(){
@@ -381,6 +420,7 @@ class ArcTheme {
 		_theme.$usernameBox.show();
 		_theme.$loginLabel.text("Sign in with another user");
 		_theme.$usernameField.focus();
+		_theme.list_sessions();
 	}
 
 	hide_user_login(){
