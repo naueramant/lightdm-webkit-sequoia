@@ -69,6 +69,7 @@ class ArcGreeter {
 				_theme.$topPanel.css("top", -50);
 				_theme.$bottomPanel.css("bottom", -50);
 				_theme.$fadeInItems.css("opacity", 0);
+
 				setTimeout(() => {
 					lightdm.login( _theme.user, _theme.session.key );
 				}, 1000);
@@ -320,8 +321,17 @@ class ArcTheme {
 	list_sessions(user) {
 		_theme.$sessionField.empty();
 
-		var selectedSession = lightdm.default_session;
-		$("#session-text").text(selectedSession);
+		if(user && user.logged_in)
+			$("#session-box").hide();
+		else
+			$("#session-box").show();
+		
+		if(lightdm.sessions.length > 0)
+			var selectedSession = lightdm.sessions[0];
+		else
+			_theme.add_notification("exclamation-circle", "#d23232", "No available sessions found");
+
+		$("#session-text").text(selectedSession.name);
 		_theme.session = selectedSession;
 
 		if(user) {
@@ -335,18 +345,18 @@ class ArcTheme {
 			var opt = $("<li></li>").attr("value", s.key).text(s.name);
 
 			if(s.key == selectedSession) {
-				_theme.session = s.key;
+				_theme.session = s;
 				$("#session-text").text(s.name);
 			}
 
 			_theme.$sessionField.append(opt); 
 
-			opt.on("click", function() {
-				$("#session-text").text($(this).text());
-				_theme.session = $(this).attr("value");
+			opt.click( function(event) {
+				_theme.session = lightdm.sessions[$(this).index()];
+				$("#session-text").text(_theme.session.name);
 				
 				if(!_theme.$usernameField.is(":visible")){
-					localStorage.setItem(_theme.user.name, $(this).attr("value"));
+					localStorage.setItem(_theme.user.name, _theme.session.key);
 				}
 			});
 		}
