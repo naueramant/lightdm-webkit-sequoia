@@ -40,7 +40,7 @@ body, .wrap {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-origin: center;
+	background-size: cover;
 }
 
 .wrap {
