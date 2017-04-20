@@ -4,8 +4,8 @@ This is a theme for LightDM Webkit2 (`lightdm-webkit2-greeter`).
 
 ### Screenshots
 
-![](http://i.imgur.com/Fqq7RUC.png)
-![](http://i.imgur.com/Xiyg77r.png)
+![](http://i.imgur.com/RCf7Eyu.png)
+![](http://i.imgur.com/8VIHFWz.png)
 
 ### Features
 
