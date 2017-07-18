@@ -1,14 +1,14 @@
 var _theme = null;
-var _greeter = null;
+var _greeter_instance = null;
 
 class ArcGreeter {
 	constructor() {
-		if ( null !== _greeter ) {
-			return _greeter;
+		if ( null !== _greeter_instance ) {
+			return _greeter_instance;
 		}
-		_greeter = this;
+		_greeter_instance = this;
 
-		return _greeter;
+		return _greeter_instance;
 	}
 
 	show_prompt(text, type) {
@@ -146,9 +146,9 @@ class ArcTheme {
 		    if (ev.which === 13) {
 		    	if(_theme.$passwordField.is(":focus")) {
 		    		if (_theme.$usernameField.is(":visible")) 
-		    			_greeter.start_authentication(_theme.$usernameField.val());
+		    			_greeter_instance.start_authentication(_theme.$usernameField.val());
 		    		else
-		    			_greeter.start_authentication(_theme.user.name);
+		    			_greeter_instance.start_authentication(_theme.user.name);
 		    	}
 		    	else if(_theme.$usernameField.is(":focus"))
 		    		$('#password-field').focus();
