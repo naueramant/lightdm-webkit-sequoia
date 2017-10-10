@@ -3,6 +3,8 @@ var prefs = {
 	"notification_clock_format": "dddd HH:mm:ss",
 
 	"one_user_auto_select": true,
+	"default_selected_user": "transpalette",
+	"use_default_selected_user": true,
 
 	"default_user_image": "img/user.png",
 	"background_image_visible": true,
