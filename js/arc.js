@@ -372,6 +372,18 @@ class ArcTheme {
 		}
 
 		this.$userList.children().first().focus();
+		
+		/* Select the user from config if any */
+		this.$userList.children().each(function() {
+			if($(this).data('username') === prefs["default_selected_user"]) {
+				$(this).focus();
+	
+				if(prefs["use_default_selected_user"])
+					$(this).trigger("click");
+
+				return false; //exit each()
+			}
+		});
 	}
 
 	add_user(user, isList){
@@ -379,7 +391,7 @@ class ArcTheme {
 
 		if(isList) {
 			this.$userList.append(()=>{
-				return $('<li class="user-tile" tabindex="0"><img src="' + prefs["default_user_image"] + '">' + user.name + '</li>')
+				return $('<li class="user-tile" tabindex="0" data-username="' + user.name + '"><img src="' + prefs["default_user_image"] + '">' + user.name + '</li>')
 						.on("click", function() {
 						    var index =  _theme.$userList.children().index(this);
 						    _theme.show_user_login(lightdm.users[index]);
