@@ -300,7 +300,7 @@ class ArcTheme {
 
 	Initialize_buttons() {
 		if(lightdm.can_shutdown && prefs["allow_shutdown"])
-			$("#shutdown-btn").css("display", "inherit");
+			$("#shutdown-btn").css("display", "block");
 		if(lightdm.can_restart && prefs["allow_restart"])
 			$("#restart-btn").css("display", "block");
 		if(lightdm.can_suspend && prefs["allow_suspend"])
